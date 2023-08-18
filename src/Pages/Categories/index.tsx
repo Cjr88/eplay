@@ -1,102 +1,54 @@
 import Banner from '../../components/Banner'
 import ProductList from '../../components/ProductsList'
-import Game from '../../models/Game'
 import resident from '../../assets/images/resident.png'
 import diablo from '../../assets/images/diablo.png'
 import zelda from '../../assets/images/zelda.png'
 import starWars from '../../assets/images/star_wars.png'
+import { Game } from '../Home'
+import { useEffect, useState } from 'react'
 
-export const promotion: Game[] = [
-  {
-    id: 1,
-    category: 'action',
-    description:
-      'Resident Evil 4, A game called as Biozard4 in Japan, is an eletronic survival horror game..',
-    title: 'Resident Evil 4',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    image: resident
-  },
-  {
-    id: 2,
-    category: 'action',
-    description:
-      'Resident Evil 4, A game called as Biozard4 in Japan, is an eletronic survival horror game..',
-    title: 'Resident Evil 4',
-    system: 'PS5',
-    infos: ['5%', 'R$ 290,00'],
-    image: resident
-  },
-  {
-    id: 3,
-    category: 'action',
-    description:
-      'Resident Evil 4, A game called as Biozard4 in Japan, is an eletronic survival horror game..',
-    title: 'Resident Evil 4',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    image: resident
-  },
-  {
-    id: 4,
-    category: 'action',
-    description:
-      'Resident Evil 4, A game called as Biozard4 in Japan, is an eletronic survival horror game..',
-    title: 'Resident Evil 4',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    image: resident
-  }
-]
-export const soon: Game[] = [
-  {
-    id: 5,
-    category: 'RPG',
-    description:
-      'Diablo IV is a great game developed by Blizzard Entertainment',
-    title: 'Diablo 4',
-    system: 'Windows',
-    infos: ['01/06'],
-    image: diablo
-  },
-  {
-    id: 6,
-    category: 'RPG',
-    description: 'Adventure ',
-    title: 'Zelda',
-    system: 'PS4',
-    infos: ['01/06'],
-    image: zelda
-  },
-  {
-    id: 7,
-    category: 'Adventure',
-    description: 'Star Wars an amazing adventure in the sky',
-    title: 'Star Wars',
-    system: 'Xbox',
-    infos: ['01/06'],
-    image: starWars
-  },
-  {
-    id: 8,
-    category: 'RPG',
-    description:
-      'Diablo IV is a great game developed by Blizzard Entertainment',
-    title: 'Diablo 4',
-    system: 'Windows',
-    infos: ['01/06'],
-    image: diablo
-  }
-]
+const Categories = () => {
+  const [gamesAction, setGamesAction] = useState<Game[]>([])
+  const [gamesSports, setGamesSports] = useState<Game[]>([])
+  const [gamesSimulator, setGamesSimulator] = useState<Game[]>([])
+  const [gamesFight, setGamesFight] = useState<Game[]>([])
+  const [gamesRpg, setGamesRpg] = useState<Game[]>([])
 
-const Home = () => (
-  <>
-    <Banner />
-    <ProductList games={promotion} title="RPG" background="gray" />
-    <ProductList games={soon} title="Action" background="black" />
-    <ProductList games={promotion} title="Adventure" background="gray" />
-    <ProductList games={soon} title="Creation" background="black" />
-  </>
-)
+  useEffect(() => {
+    fetch('https://fake-api-tau.vercel.app/api/eplay/acao')
+      .then((res) => res.json())
+      .then((res) => setGamesAction(res))
 
-export default Home
+    fetch('https://fake-api-tau.vercel.app/api/eplay/esportes')
+      .then((res) => res.json())
+      .then((res) => setGamesSports(res))
+
+    fetch('https://fake-api-tau.vercel.app/api/eplay/simulacao')
+      .then((res) => res.json())
+      .then((res) => setGamesSimulator(res))
+
+    fetch('https://fake-api-tau.vercel.app/api/eplay/luta')
+      .then((res) => res.json())
+      .then((res) => setGamesFight(res))
+
+    fetch('https://fake-api-tau.vercel.app/api/eplay/rpg')
+      .then((res) => res.json())
+      .then((res) => setGamesRpg(res))
+  }, [])
+
+  return (
+    <>
+      <ProductList games={gamesAction} title="Action" background="black" />
+      <ProductList games={gamesSports} title="Sports" background="gray" />
+      <ProductList
+        games={gamesSimulator}
+        title="Simulator"
+        background="black"
+      />
+      <ProductList games={gamesFight} title="Fight" background="gray" />
+      <ProductList games={gamesRpg} title="Rpg" background="black" />
+    </>
+  )
+}
+
+export default Categories
