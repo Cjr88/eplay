@@ -22,6 +22,7 @@ export const Action = styled.div`
 
 export const Item = styled.li`
   position: relative;
+  cursor: zoom-in;
 
   > img {
     border: 2px solid ${colors.white};
@@ -58,7 +59,7 @@ export const Modal = styled.div`
     background-color: rgba(0, 0, 0, 0.73);
   }
 
-  &.visible {
+  &.is-visible {
     display: flex;
   }
 `
